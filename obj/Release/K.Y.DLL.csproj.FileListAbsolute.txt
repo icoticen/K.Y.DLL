@@ -1,0 +1,15 @@
+F:\K\Proj\YCProj\K.Y.DLL\bin\Release\K.Y.DLL.dll
+F:\K\Proj\YCProj\K.Y.DLL\bin\Release\K.Y.DLL.pdb
+F:\K\Proj\YCProj\K.Y.DLL\obj\Release\K.Y.DLL.csprojResolveAssemblyReference.cache
+F:\K\Proj\YCProj\K.Y.DLL\obj\Release\K.Y.DLL.dll
+F:\K\Proj\YCProj\K.Y.DLL\obj\Release\K.Y.DLL.pdb
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\K.Y.DLL.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\K.Y.DLL.pdb
+F:\K\Proj\236.svn\K.Y.DLL\obj\Release\K.Y.DLL.csprojResolveAssemblyReference.cache
+F:\K\Proj\236.svn\K.Y.DLL\obj\Release\K.Y.DLL.dll
+F:\K\Proj\236.svn\K.Y.DLL\obj\Release\K.Y.DLL.pdb
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\Aspose.Cells.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\PushSharp.Apple.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\PushSharp.Core.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\EntityFramework.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Release\EntityFramework.xml

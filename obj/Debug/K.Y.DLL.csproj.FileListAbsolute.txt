@@ -1,0 +1,14 @@
+F:\K\Proj\YCProj\K.Y.DLL\bin\Debug\K.Y.DLL.dll
+F:\K\Proj\YCProj\K.Y.DLL\bin\Debug\K.Y.DLL.pdb
+F:\K\Proj\YCProj\K.Y.DLL\obj\Debug\K.Y.DLL.csprojResolveAssemblyReference.cache
+F:\K\Proj\YCProj\K.Y.DLL\obj\Debug\K.Y.DLL.dll
+F:\K\Proj\YCProj\K.Y.DLL\obj\Debug\K.Y.DLL.pdb
+F:\K\Proj\236.svn\K.Y.DLL\bin\Debug\K.Y.DLL.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Debug\K.Y.DLL.pdb
+F:\K\Proj\236.svn\K.Y.DLL\obj\Debug\K.Y.DLL.dll
+F:\K\Proj\236.svn\K.Y.DLL\obj\Debug\K.Y.DLL.pdb
+F:\K\Proj\236.svn\K.Y.DLL\bin\Debug\PushSharp.Apple.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Debug\PushSharp.Core.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Debug\Aspose.Cells.dll
+F:\K\Proj\236.svn\K.Y.DLL\bin\Debug\EntityFramework.xml
+F:\K\Proj\236.svn\K.Y.DLL\obj\Debug\K.Y.DLL.csprojResolveAssemblyReference.cache
