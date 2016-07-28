@@ -78,7 +78,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushShare\PushHelper.cs" />
     <Compile Include="Tool\T_Crypt.cs" />
-    <Compile Include="Tool\T_Express.cs" />
     <Compile Include="Tool\T_File.cs" />
     <Compile Include="Tool\T_Log.cs" />
     <Compile Include="Model\M_Pagination.cs" />
