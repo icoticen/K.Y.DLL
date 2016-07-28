@@ -420,7 +420,7 @@ namespace K.Y.DLL
         /// <param name="list">集合</param>    
         /// <param name="propertyName">需要返回的列的列名</param>    
         /// <returns>数据集(表)</returns>    
-        public static DataTable ToDataTable<T>(this IList<T> list, params string[] propertyName)
+        public static DataTable Ex_ToDataTable<T>(this IList<T> list, params string[] propertyName)
         {
             List<string> propertyNameList = new List<string>();
             if (propertyName != null)
