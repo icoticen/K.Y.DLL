@@ -12,4 +12,4 @@ git status
 
 git push github master
 
-pause
+CMD
