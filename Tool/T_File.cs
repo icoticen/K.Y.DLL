@@ -146,48 +146,83 @@ namespace K.Y.DLL.Tool
         //    sw.Close();
         //    sw.Dispose();
         //}
-        public static String File_OpenText(String FilePath, Boolean Creat)
+        public static String File_OpenText(String FilePath, Boolean CreatFile = true, Boolean CreateDir = true)
         {
             try
             {
                 FileInfo File = new FileInfo(FilePath);
-                if (!File.Exists && !Creat)
-                    return "";
-                if (!File.Exists && Creat)
-                    File.Create();
+
+                if (!File.Directory.Exists)
+                {
+                    if (!CreateDir) return "";
+                    File.Directory.Create();
+                }
+
                 var Content = "";
-                using (StreamReader sr = File.OpenText())
-                    Content = sr.ReadToEnd();
+                if (File.Exists)
+                {
+                    using (StreamReader sr = File.OpenText())
+                        Content = sr.ReadToEnd();
+                }
+                else
+                {
+                    if (!CreatFile) return "";
+                    using (StreamWriter sw = File.CreateText())
+                    {
+                        sw.WriteLine(Content);
+                    }
+                }
+
                 return Content;
             }
             catch (Exception ex) { T_Log.LogError(ex); return ""; }
         }
-        public static Int32 File_CreateText(String FilePath, String Content, Boolean Creat)
+        public static Int32 File_CreateText(String FilePath, String Content, Boolean CreateDir = true)
         {
             try
             {
                 FileInfo File = new FileInfo(FilePath);
-                if (!File.Exists && !Creat)
-                    return 0;
-                if (!File.Exists && Creat)
-                    File.Create();
-                using (StreamWriter sw = File.CreateText())
-                    sw.WriteLine(Content);
+                if (!File.Directory.Exists)
+                {
+                    if (!CreateDir) return 0;
+                    File.Directory.Create();
+                }
+
+                    using (StreamWriter sw = File.CreateText())
+                    {
+                        sw.WriteLine(Content);
+                    }
                 return 1;
             }
             catch (Exception ex) { T_Log.LogError(ex); return -1; }
         }
-        public static Int32 File_AppendText(String FilePath, String Content, Boolean Creat)
+        public static Int32 File_AppendText(String FilePath, String Content, Boolean CreatFile = true, Boolean CreateDir = true)
         {
             try
             {
                 FileInfo File = new FileInfo(FilePath);
-                if (!File.Exists && !Creat)
-                    return 0;
-                if (!File.Exists && Creat)
-                    File.Create();
-                using (StreamWriter sw = File.AppendText())
-                    sw.WriteLine(Content);
+
+                if (!File.Directory.Exists)
+                {
+                    if (!CreateDir) return 0;
+                    File.Directory.Create();
+                }
+
+                if (File.Exists)
+                {
+                    using (StreamWriter sw = File.AppendText())
+                    {
+                        sw.WriteLine(Content);
+                    }
+                }
+                else
+                {
+                    if (!CreatFile) return 0;
+                    using (StreamWriter sw = File.CreateText())
+                    {
+                        sw.WriteLine(Content);
+                    }
+                }
                 return 1;
             }
             catch (Exception ex) { T_Log.LogError(ex); return -1; }
