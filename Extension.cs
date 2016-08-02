@@ -556,8 +556,17 @@ namespace K.Y.DLL
 
             return IsOrderByAsc ? Queryable.ThenBy(OrderedQueryable, KeySelector) : Queryable.ThenByDescending(OrderedQueryable, KeySelector);
         }
+       
         #endregion
-
+        public static List<T> Ex_GetPagination<T>(this IOrderedQueryable<T> OrderedQueryable, Int32 PageIndex, Int32 PageSize = 10) where T : class
+        {
+            var Page = new K.Y.DLL.Model.M_Pagination(PageIndex, PageSize);
+            return Page.GetPagination(OrderedQueryable);
+        }
+        public static List<T> Ex_GetPagination<T>(this IOrderedQueryable<T> OrderedQueryable, K.Y.DLL.Model.M_Pagination Page) where T : class
+        {
+            return Page.GetPagination(OrderedQueryable);
+        }
 
         #region MvcHtmlHelper
         private static string GetPropertyName<T, TKey>(Expression<Func<T, TKey>> expr)
