@@ -188,10 +188,10 @@ namespace K.Y.DLL.Tool
                     File.Directory.Create();
                 }
 
-                    using (StreamWriter sw = File.CreateText())
-                    {
-                        sw.WriteLine(Content);
-                    }
+                using (StreamWriter sw = File.CreateText())
+                {
+                    sw.WriteLine(Content);
+                }
                 return 1;
             }
             catch (Exception ex) { T_Log.LogError(ex); return -1; }
@@ -278,6 +278,14 @@ namespace K.Y.DLL.Tool
         //{
         //    return Image_Thumbnail(OriginalFilePath, ThumbnailFilePath, Size, true);
         //}
+        /// <summary>
+        /// 不建议使用  留着因为以前项目里有用到 早晚会被清理掉的
+        /// </summary>
+        /// <param name="OriginalFilePath"></param>
+        /// <param name="ThumbnailFilePath"></param>
+        /// <param name="Size"></param>
+        /// <param name="OverWrite"></param>
+        /// <returns></returns>
         public static String Image_Thumbnail(String OriginalFilePath, String ThumbnailFilePath = default(String), Int32 Size = 128, Boolean OverWrite = true)
         {
             var FileInfo = new FileInfo(OriginalFilePath);
@@ -291,6 +299,7 @@ namespace K.Y.DLL.Tool
                 else
                     File.Delete(ThumbnailFilePath);
             }
+
             System.Drawing.Image image = System.Drawing.Image.FromFile(OriginalFilePath);
             int srcWidth = image.Width;
             int srcHeight = image.Height;
