@@ -7,7 +7,7 @@ using System.Text;
 
 namespace K.Y.DLL.Tool
 {
-    public class T_Crypt 
+    public class T_Crypt
     {
         #region MD5
         /// <summary>
@@ -61,6 +61,40 @@ namespace K.Y.DLL.Tool
             return strResult;
         }
         #endregion
+
+        /// <summary>  
+        /// 根据GUID获取16位的唯一字符串  
+        /// </summary>  
+        /// <param name=\"guid\"></param>  
+        /// <returns></returns>  
+        public static string Guid16()
+        {
+            long i = 1;
+            foreach (byte b in Guid.NewGuid().ToByteArray())
+                i *= ((int)b + 1);
+            return string.Format("{0:x}", i - DateTime.Now.Ticks);
+        }
+        /// <summary>  
+        /// 根据GUID获取19位的唯一数字序列  
+        /// </summary>  
+        /// <returns></returns>  
+        public static long Guid19()
+        {
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            return BitConverter.ToInt64(buffer, 0);
+        }
+        //该代码片段来自于: http://www.sharejs.com/codes/csharp/7040
+        /// <summary>  
+        /// 生成22位唯一的数字 并发可用  
+        /// </summary>  
+        /// <returns></returns>  
+        public static string Guid22()
+        {
+            System.Threading.Thread.Sleep(1); //保证yyyyMMddHHmmssffff唯一  
+            Random d = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
+            string strUnique = DateTime.Now.ToString("yyyyMMddHHmmssffff") + d.Next(1000, 9999);
+            return strUnique;
+        }
 
         #region SHA1
         public static String SHA1_EnCrypt_String(String content)

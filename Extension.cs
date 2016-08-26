@@ -20,60 +20,24 @@ namespace K.Y.DLL
         {
             return T.ToString(Format);
         }
-        //public static String Ex_ToString(this DateTime? T)
-        //{
-        //    return T.Ex_ToString("yyyy-MM-dd HH:mm:ss");
-        //}
-        //public static String Ex_ToString(this DateTime? T, String Format)
-        //{
-        //    return T.Ex_ToString(,);
-        //}
         public static String Ex_ToString(this DateTime? T, String Format = "yyyy-MM-dd HH:mm:ss", String Default = "")
         {
             if (T == null) return Default;
             return T.HasValue ? T.Value.ToString(String.IsNullOrEmpty(Format) ? "yyyy-MM-dd HH:mm:ss" : Format) : Default;
         }
 
-        public static Decimal Ex_ToDecimal(this Object O)
-        {
-            if (O == null) return 0;
-            var R = 0m;
-            Decimal.TryParse(O.ToString(), out R);
-            return R;
-        }
-        //public static Decimal Ex_ToDecimal(this Decimal T, Int32 Decimals)
-        //{
-        //    return Math.Round(T, Decimals);
-        //}
-        //public static Decimal Ex_ToDecimal(this Decimal? T)
-        //{
-        //    return T.Ex_ToDecimal(2);
-        //}
-        //public static Decimal Ex_ToDecimal(this Decimal? T, Int32 Decimals)
-        //{
-        //    return T.Ex_ToDecimal(Decimals, 0m);
-        //}
-        public static Decimal Ex_ToDecimal(this Decimal? T, Int32 Decimals = 2, Decimal Default = 0m)
+        public static Decimal Ex_ToDecimal(this Decimal? T, Int32 Decimals = 2, Decimal Default = 0.00m)
         {
             if (T == null) return Default;
             return Math.Round(T.Value, Decimals);
         }
-
-        //public static Double Ex_ToDouble(this Object O)
-        //{
-        //    if (O == null) return 0;
-        //    var R = 0d;
-        //    Double.TryParse(O.ToString(), out R);
-        //    return R;
-        //}
-        //public static Double Ex_ToDouble(this Double? T)
-        //{
-        //    return T.Ex_ToDouble(2);
-        //}
-        //public static Double Ex_ToDouble(this Double? T, Int32 Decimals)
-        //{
-        //    return T.Ex_ToDouble(Decimals, 0);
-        //}
+        public static Decimal Ex_ToDecimal(this String S, Int32 Decimals = 2, Decimal Default = 0.00m)
+        {
+            if (String.IsNullOrWhiteSpace(S)) return Default;
+            var R = 0.00m;
+            if (Decimal.TryParse(S, out R)) return R;
+            return Default;
+        }
         public static Double Ex_ToDouble(this String S, Int32 Decimals = 2, Double Default = 0.00d)
         {
             if (String.IsNullOrWhiteSpace(S)) return Default;
@@ -137,16 +101,11 @@ namespace K.Y.DLL
             return DateTime.Now.Ex_ToLinuxData();
         }
 
-        public static String Ex_ToJson<T>(this T E)
+        public static String Ex_ToJson<T>(this T Entity)
         {
-
-            //var jSetting = new JsonSerializerSettings { MissingMemberHandling = DateFormatHandling.MicrosoftDateFormat }; 
-            //            var json = JsonConvert.SerializeObject(response, Formatting.Indented, jSetting);
-            //var J=  new JavaScriptSerializer();
-            //JavaScriptTypeResolver
             String Json = "";
-            if (E != null)
-                Json = (new JavaScriptSerializer()).Serialize(E);
+            if (Entity != null)
+                Json = (new JavaScriptSerializer()).Serialize(Entity);
             return Json;
         }
         public static T Ex_ToEntity<T>(this String Json)
@@ -154,16 +113,11 @@ namespace K.Y.DLL
             return (new JavaScriptSerializer()).Deserialize<T>(Json);
         }
 
-        //public static String Ex_ToString(this String S, Int32 MaxLength)
-        //{
-        //    return S.Ex_ToString(MaxLength, "");
-        //}
-        public static String Ex_ToString(this String S, Int32 MaxLength, String ExtensionStr = "")
+        public static String Ex_ToString(this String String, Int32 MaxLength, String ExtensionStr = "")
         {
-            S = S ?? "";
-            return S.Length >= MaxLength ? S.Substring(0, MaxLength) + ExtensionStr : S;
+            String = String ?? "";
+            return String.Length >= MaxLength ? String.Substring(0, MaxLength) + ExtensionStr : String;
         }
-
         public static List<String> Ex_ToList(this String String)
         {
             var SplitArg = new[] { ',', ' ', '\n', '\r', '\t', '，' };
@@ -181,31 +135,17 @@ namespace K.Y.DLL
         }
 
 
-        //public static Int32 Ex_ToInt32(this String S)
-        //{
-        //    //if (S == null) return 0;
-        //    //var R = 0;
-        //    //Int32.TryParse(S, out R);
-        //    return S.Ex_ToInt32(0);
-        //}
-        public static Int32 Ex_ToInt32(this String S, Int32 _Default = 0)
+        public static Int32 Ex_ToInt32(this String S, Int32 Default = 0)
         {
-            if (String.IsNullOrWhiteSpace(S)) return _Default;
+            if (String.IsNullOrWhiteSpace(S)) return Default;
             var R = 0;
             if (Int32.TryParse(S, out R)) return R;
-            return _Default;
+            return Default;
         }
-
-        public static List<Int32> Ex_ToInt32<T>(this IEnumerable<T> L)
+        public static List<Int32> Ex_ToInt32<T>(this IEnumerable<T> L, Int32 Default = 0)
         {
             if (L == null) return new List<int>();
-            var R = L.Select(p => p.ToString().Ex_ToInt32()).ToList();
-            return R;
-        }
-        public static List<Int32> Ex_ToInt32<T>(this IEnumerable<T> L, Int32 I)
-        {
-            if (L == null) return new List<int>();
-            var R = L.Select(p => p.ToString().Ex_ToInt32(I)).ToList();
+            var R = L.Select(p => p.ToString().Ex_ToInt32(Default)).ToList();
             return R;
         }
 
@@ -215,34 +155,43 @@ namespace K.Y.DLL
         /// <typeparam name="T"></typeparam>
         /// <param name="L">{{T,T},{T,T,T}}</param>
         /// <returns>{T,T,T,T,T}</returns>
-        public static List<T> Ex_ToList<T>(this IEnumerable<IEnumerable<T>> L)
+        public static List<T> Ex_ToList<T>(this IEnumerable<IEnumerable<T>> List)
         {
             var R = new List<T>();
-            foreach (var I in L)
+            foreach (var l in List)
             {
-                R.AddRange(I);
+                R.AddRange(l);
             }
             return R;
         }
         #endregion
 
+
+
         #region SelectListItem
-        public static String Ex_GetText(this IEnumerable<SelectListItem> iList, Int32? Value)
+        public static String Ex_GetText(this IEnumerable<SelectListItem> iList, Int32? Value, String Default = "--")
         {
-            return iList.Ex_GetText(Value.ToString());
+            return iList.Ex_GetText(Value.ToString(), Default);
         }
-        public static String Ex_GetText(this IEnumerable<SelectListItem> iList, String Value)
+        public static String Ex_GetText(this IEnumerable<SelectListItem> iList, String Value, String Default = "--")
         {
             var item = iList.FirstOrDefault(p => p.Value == Value);
             if (item != null) return item.Text;
-            return "--";
+            return Default;
         }
-        public static Int32 Ex_GetValue(this IEnumerable<SelectListItem> iList, String Text)
+        public static String Ex_GetValue(this IEnumerable<SelectListItem> iList, String Text , String Default)
+        {
+            var item = iList.FirstOrDefault(p => p.Text == Text);
+            if (item != null) return item.Value;
+            return Default;
+        }
+        public static Int32 Ex_GetValue(this IEnumerable<SelectListItem> iList, String Text, Int32 Default = 0)
         {
             var item = iList.FirstOrDefault(p => p.Text == Text);
             if (item != null) return item.Value.Ex_ToInt32();
-            return 0;
+            return Default;
         }
+      
         /// <summary>
         /// 
         /// </summary>
@@ -251,40 +200,28 @@ namespace K.Y.DLL
         /// <param name="Value"></param>
         /// <param name="Index">从0开始</param>
         /// <returns></returns>
-        public static List<SelectListItem> Ex_Add(this IEnumerable<SelectListItem> iList, String Text, String Value, Int32 Index)
+        public static List<SelectListItem> Ex_Add(this List<SelectListItem> iList, String Text, String Value, Int32 Index = 0)
         {
-            var List = iList.ToList() ?? new List<SelectListItem>();
+            var List = iList ?? new List<SelectListItem>();
             Index = Index > List.Count ? List.Count : Index;
             List.Insert(Index, new SelectListItem { Text = Text, Value = Value });
             return List;
         }
-        public static List<SelectListItem> Ex_AddDefault(this IEnumerable<SelectListItem> iList)
+        public static List<SelectListItem> Ex_AddDefault(this List<SelectListItem> iList, String Text = "--全部--", String Value = "0")
         {
-            var List = iList.ToList() ?? new List<SelectListItem>();
-            List.Insert(0, new SelectListItem { Text = "--全部--", Value = "" });
+            var List = iList ?? new List<SelectListItem>();
+            List.Insert(0, new SelectListItem { Text = Text, Value = Value });
             return List;
         }
-        public static List<SelectListItem> Ex_AddDefault(this IEnumerable<SelectListItem> iList, String Text)
-        {
-            var List = iList.ToList() ?? new List<SelectListItem>();
-            List.Insert(0, new SelectListItem { Text = Text, Value = "" });
-            return List;
-        }
-        public static List<SelectListItem> Ex_AddDefault(this IEnumerable<SelectListItem> iList, String Text, Int32? Value)
-        {
-            var List = iList.ToList() ?? new List<SelectListItem>();
-            List.Insert(0, new SelectListItem { Text = Text, Value = Value + "" });
-            return List;
-        }
-        public static List<SelectListItem> Ex_SetSelected(this IEnumerable<SelectListItem> iList, Int32? Value)
+        public static List<SelectListItem> Ex_SetSelected(this List<SelectListItem> iList, Int32? Value = 0)
         {
             var List = iList ?? new List<SelectListItem>();
             return List.Select(p =>
             {
-                if (p.Value == (Value + "")) p.Selected = true; return p;
+                if (p.Value == Value.ToString()) p.Selected = true; return p;
             }).ToList();
         }
-        public static List<SelectListItem> Ex_SetSelected(this IEnumerable<SelectListItem> iList, String Text)
+        public static List<SelectListItem> Ex_SetSelected(this List<SelectListItem> iList, String Text)
         {
             var List = iList ?? new List<SelectListItem>();
             return List.Select(p =>
@@ -294,6 +231,10 @@ namespace K.Y.DLL
         }
 
         #endregion
+
+
+
+
 
         #region Datatable<=>List
 
@@ -316,7 +257,14 @@ namespace K.Y.DLL
             Type type = typeof(T);
             DataTable dt = new DataTable();
             //把所有的public属性加入到集合 并添加DataTable的列    
-            Array.ForEach<PropertyInfo>(type.GetProperties(), p => { pList.Add(p); dt.Columns.Add(p.Name, p.PropertyType); });
+            Array.ForEach<PropertyInfo>(type.GetProperties(), p =>
+            {
+                pList.Add(p);
+                var _ColType = p.PropertyType;
+                if ((_ColType.IsGenericType) && (_ColType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                    _ColType = _ColType.GetGenericArguments()[0];
+                dt.Columns.Add(p.Name, _ColType);
+            });
             foreach (var item in L)
             {
                 //创建一个DataRow实例    
@@ -420,59 +368,59 @@ namespace K.Y.DLL
         /// <param name="list">集合</param>    
         /// <param name="propertyName">需要返回的列的列名</param>    
         /// <returns>数据集(表)</returns>    
-        public static DataTable Ex_ToDataTable<T>(this IList<T> list, params string[] propertyName)
-        {
-            List<string> propertyNameList = new List<string>();
-            if (propertyName != null)
-                propertyNameList.AddRange(propertyName);
-            DataTable result = new DataTable();
-            if (list.Count > 0)
-            {
-                PropertyInfo[] propertys = list[0].GetType().GetProperties();
-                foreach (PropertyInfo pi in propertys)
-                {
+        //public static DataTable Ex_ToDataTable<T>(this IList<T> list, params string[] propertyName)
+        //{
+        //    List<string> propertyNameList = new List<string>();
+        //    if (propertyName != null)
+        //        propertyNameList.AddRange(propertyName);
+        //    DataTable result = new DataTable();
+        //    if (list.Count > 0)
+        //    {
+        //        PropertyInfo[] propertys = list[0].GetType().GetProperties();
+        //        foreach (PropertyInfo pi in propertys)
+        //        {
 
-                    if (propertyNameList.Count == 0)
-                    {
-                        //if (pi.PropertyType==typeof(Nullable<>))
-                        //{
-                        result.Columns.Add(pi.Name);
-                        //}
-                        //else
-                        //    result.Columns.Add(pi.Name, pi.PropertyType);
-                    }
-                    else
-                    {
-                        if (propertyNameList.Contains(pi.Name))
-                            result.Columns.Add(pi.Name, pi.PropertyType);
-                    }
-                }
+        //            if (propertyNameList.Count == 0)
+        //            {
+        //                //if (pi.PropertyType==typeof(Nullable<>))
+        //                //{
+        //                result.Columns.Add(pi.Name);
+        //                //}
+        //                //else
+        //                //    result.Columns.Add(pi.Name, pi.PropertyType);
+        //            }
+        //            else
+        //            {
+        //                if (propertyNameList.Contains(pi.Name))
+        //                    result.Columns.Add(pi.Name, pi.PropertyType);
+        //            }
+        //        }
 
-                for (int i = 0; i < list.Count; i++)
-                {
-                    ArrayList tempList = new ArrayList();
-                    foreach (PropertyInfo pi in propertys)
-                    {
-                        if (propertyNameList.Count == 0)
-                        {
-                            object obj = pi.GetValue(list[i], null);
-                            tempList.Add(obj);
-                        }
-                        else
-                        {
-                            if (propertyNameList.Contains(pi.Name))
-                            {
-                                object obj = pi.GetValue(list[i], null);
-                                tempList.Add(obj);
-                            }
-                        }
-                    }
-                    object[] array = tempList.ToArray();
-                    result.LoadDataRow(array, true);
-                }
-            }
-            return result;
-        }
+        //        for (int i = 0; i < list.Count; i++)
+        //        {
+        //            ArrayList tempList = new ArrayList();
+        //            foreach (PropertyInfo pi in propertys)
+        //            {
+        //                if (propertyNameList.Count == 0)
+        //                {
+        //                    object obj = pi.GetValue(list[i], null);
+        //                    tempList.Add(obj);
+        //                }
+        //                else
+        //                {
+        //                    if (propertyNameList.Contains(pi.Name))
+        //                    {
+        //                        object obj = pi.GetValue(list[i], null);
+        //                        tempList.Add(obj);
+        //                    }
+        //                }
+        //            }
+        //            object[] array = tempList.ToArray();
+        //            result.LoadDataRow(array, true);
+        //        }
+        //    }
+        //    return result;
+        //}
         #endregion
 
 

@@ -18,11 +18,11 @@ namespace K.Y.DLL.Pay
             TRADE_FAILURE = 4,
         }
 
-        private static readonly string partner = "2088411297150842";
+       // private static readonly string partner = "2088411297150842";
 
         public class CallBack
         {
-            public static  Boolean CallBack_NotifyID_Validate(string notify_id)
+            public static Boolean CallBack_NotifyID_Validate(string notify_id, string partner)
             {
                 string sendURL = string.Format("https://mapi.alipay.com/gateway.do?service=notify_verify&partner={0}&notify_id={1}", partner, notify_id);
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sendURL);
@@ -33,7 +33,7 @@ namespace K.Y.DLL.Pay
                 var IsVality = resultStr.ToLower() == "true";
                 return IsVality;
             }
-            public static CallBack CallBack_Check(string trade_no, string subject, string out_trade_no, string notify_time, string total_fee, string notify_id, string trade_status)
+            public static CallBack CallBack_Check(string trade_no, string subject, string out_trade_no, string notify_time, string total_fee, string notify_id, string trade_status, String partner = "2088411297150842")
             {
                 var mZFBPay = new CallBack
                 {
@@ -47,7 +47,7 @@ namespace K.Y.DLL.Pay
                     IsVality = false,
                     TradeStatus = ZFB_TradeStatus.TRADE_ERROR
                 };
-                mZFBPay.IsVality = CallBack_NotifyID_Validate(mZFBPay.notify_id);
+                mZFBPay.IsVality = CallBack_NotifyID_Validate(mZFBPay.notify_id,partner);
                 if (mZFBPay.IsVality)
                 {
                     var TR = ZFB_TradeStatus.TRADE_FAILURE;

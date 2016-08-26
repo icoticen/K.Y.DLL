@@ -126,7 +126,7 @@ namespace K.Y.DLL.MVC
         {
             return _T_Admin_Insert<E, T>(Model, F, CallBack);
         }
-      
+
         protected ActionResult _T_Admin_Update<T>(Int32 ID, Action<T> A, Action<E, T> CallBack = null)
             where T : class,new()
         {
@@ -167,7 +167,6 @@ namespace K.Y.DLL.MVC
             return _T_API_List<E, T, Q>(PageIndex, PageSize, F, F2);
         }
         #endregion
-        
     }
     public abstract class MController : System.Web.Mvc.Controller
     {
@@ -251,10 +250,10 @@ namespace K.Y.DLL.MVC
 
         #region File
 
-        protected ActionResult _T_Ajax_FilePost(String FileElementName, String Dirpath, String PreStr, String FileType)
+        protected ActionResult _T_Ajax_FilePost(String FileElementName, String Dirpath, String PreStr, String FileType = "image", String FileExtension = ".jpg.bmp.png.jpeg.gif")
         {
-            String FileExtension = ".jpg.bmp.png.jpeg.gif";
-            switch ((FileType ?? "image").ToLower())
+            //String FileExtension = ".jpg.bmp.png.jpeg.gif";
+            switch (FileType .ToLower())
             {
                 //其他定制吧  ->_->
                 case "image": FileExtension = ".jpg.bmp.png.jpeg.gif"; break;

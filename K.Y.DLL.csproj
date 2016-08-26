@@ -79,6 +79,7 @@
     <Compile Include="PushShare\PushHelper.cs" />
     <Compile Include="Tool\T_Crypt.cs" />
     <Compile Include="Tool\T_File.cs" />
+    <Compile Include="Tool\T_Image.cs" />
     <Compile Include="Tool\T_Log.cs" />
     <Compile Include="Model\M_Pagination.cs" />
     <Compile Include="Tool\T_Mail.cs" />
